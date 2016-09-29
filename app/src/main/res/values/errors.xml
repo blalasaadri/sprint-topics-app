@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_error">Something went terrebly wrong when trying to choose an item from the navigation drawer.</string>
+</resources>

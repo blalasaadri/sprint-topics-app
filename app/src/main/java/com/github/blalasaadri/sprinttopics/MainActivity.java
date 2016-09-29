@@ -6,31 +6,31 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.Locale;
 
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
 import static android.widget.Toast.makeText;
+import static com.github.blalasaadri.sprinttopics.ErrorFragment.ERROR_MESSAGE_ARG;
 import static com.github.blalasaadri.sprinttopics.NurseryRhymeFragment.NURSERY_RHYME_ARGUMENT;
 import static com.github.blalasaadri.sprinttopics.NurseryRhymeFragment.NurseryRhymeSelection.NEW;
+import static com.github.blalasaadri.sprinttopics.NurseryRhymeFragment.NurseryRhymeSelection.OLD;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindArray(R.array.navigation_list_items)
+    String[] navigationListItems;
+
+    @BindArray(R.array.navigation_list_ids)
+    String[] navigationListIds;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    @BindArray(R.array.navigation_list_items)
-    String[] navigationListItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mTitle = mDrawerTitle = getTitle();
 
         // set a custom shadow that overlays the main content when the drawer opens
-        //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.drawer_list_item, navigationListItems));
@@ -142,15 +146,39 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position > navigationListItems.length) {
+                Snackbar.make(view, R.string.nursery_rhyme_unknown, LENGTH_LONG).setAction("Action", null).show();
+                return;
+            }
             selectItem(position);
         }
     }
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = new NurseryRhymeFragment();
+        Fragment fragment;
         Bundle args = new Bundle();
-        args.putSerializable(NURSERY_RHYME_ARGUMENT, NEW);
+
+        switch (navigationListIds[position]) {
+            case "topics":
+                fragment = new TopicsFragment();
+                break;
+            case "new":
+                fragment = new NurseryRhymeFragment();
+                args.putSerializable(NURSERY_RHYME_ARGUMENT, NEW);
+                break;
+            case "old":
+                fragment = new NurseryRhymeFragment();
+                args.putSerializable(NURSERY_RHYME_ARGUMENT, OLD);
+                break;
+            case "licenses":
+                fragment = new LicensesFragment();
+                break;
+            default:
+                // How did we land here?
+                fragment = new ErrorFragment();
+                args.putInt(ERROR_MESSAGE_ARG, R.string.navigation_error);
+        }
         fragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();

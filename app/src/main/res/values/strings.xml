@@ -7,6 +7,15 @@
         <item>Jack &amp; Jill (20th century version)</item>
         <item>Jack &amp; Jill (19th century version)</item>
         <item>Licenses</item>
+        <item>[error]</item>
+    </string-array>
+    <!-- TODO There has to be a better way of doing this -->
+    <string-array name="navigation_list_ids">
+        <item>topics</item>
+        <item>new</item>
+        <item>old</item>
+        <item>licenses</item>
+        <item>error</item>
     </string-array>
 
     <string name="nursery_rhyme_new">

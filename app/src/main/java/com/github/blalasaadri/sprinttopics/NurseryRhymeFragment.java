@@ -14,7 +14,7 @@ import static com.github.blalasaadri.sprinttopics.NurseryRhymeFragment.NurseryRh
 
 public class NurseryRhymeFragment extends Fragment {
 
-    final static String NURSERY_RHYME_ARGUMENT = "nursery_rhyme";
+    static final String NURSERY_RHYME_ARGUMENT = "nursery_rhyme";
 
     @BindView(R.id.nursery_rhyme_text)
     TextView nurseryRhymeText;
