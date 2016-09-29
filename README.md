@@ -23,11 +23,18 @@ A solution which I found [here](https://code.google.com/p/android/issues/detail?
 In the `buildscript` portion of your gradle build file, add the following dependency:
 
     dependencies {
-      // Use a version of lombok which understands lambdas
-      classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        ...
+        // Use a version of lombok which understands lambdas
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        ...
     }
 
 ### `:app:transformJackWithJackForDebugERROR: Dex writing phase: file '<jar file>', entry '<dex file>' cannot be read: incorrect data check`
 This seems to be an error that occurs when a zip file is built incorrectly.
 Simply rebuilding should normally do the trick.
 
+### `:app:mergeDebugResourcesException in thread "<thread name>" java.lang.RuntimeException: Timed out while waiting for slave aapt process, make sure the aapt execute at <android sdk path>/build-tools/24.0.3/aapt can run successfully (some anti-virus may block it) or try setting environment variable SLAVE_AAPT_TIMEOUT to a value bigger than 5 seconds`
+
+There seems to be a problem in some versions of the android build tools, which causes aapt to fail.
+This problem has existed on and off for a while and the issue can be followed [here](https://code.google.com/p/android/issues/detail?id=188627).
+A solution which worked for me was switching from the build tool version 24.0.3 back to 24.0.2.
