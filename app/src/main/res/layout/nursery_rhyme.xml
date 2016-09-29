@@ -6,9 +6,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
+        android:id="@+id/nursery_rhyme_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/nursery_rhyme_new" />
+        />
 
 </android.support.v4.widget.NestedScrollView>

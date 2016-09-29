@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">24h Sprint Topics</string>
     <string name="jack_and_jill_title">Jack &amp; Jill</string>
+
+    <string-array name="navigation_list_items">
+        <item>24h Sprint Topics</item>
+        <item>Jack &amp; Jill (20th century version)</item>
+        <item>Jack &amp; Jill (19th century version)</item>
+        <item>Licenses</item>
+        <item>[error]</item>
+    </string-array>
+    <!-- TODO There has to be a better way of doing this -->
+    <string-array name="navigation_list_ids">
+        <item>topics</item>
+        <item>new</item>
+        <item>old</item>
+        <item>licenses</item>
+        <item>error</item>
+    </string-array>
+
     <string name="nursery_rhyme_new">
         "Jack and Jill went up the hill\n"
         "To fetch a pail of water.\n"
@@ -33,5 +50,13 @@
         "Her mother whipt her, across her knee,\n"
         "For laughing at Jack's disaster."
     </string>
+    <string name="nursery_rhyme_unknown">
+        "What the heck???"
+    </string>
     <string name="action_settings">Settings</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
 </resources>
