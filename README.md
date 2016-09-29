@@ -1,6 +1,6 @@
-# sprint-topics-app
+# Looking at "Jack and Jill"
 
-This is a small project for the first Senacor "24h Sprint". In this project I want to take a look at the [Jack and Jill](http://tools.android.com/tech-docs/jackandjill) toolchain for android.
+This is a small project for the first Senacor *24h Sprint*. In this project I have taken a look at the [Jack and Jill](http://tools.android.com/tech-docs/jackandjill) toolchain for android.
 
 ## Findings
 1. [android-apt](https://bitbucket.org/hvisser/android-apt) is no longer needed with Jack and Jill, as they come with their own annotation processor.
@@ -34,19 +34,20 @@ This is a small project for the first Senacor "24h Sprint". In this project I wa
     The output of this command using the build tools version 24.0.3 can be found in the file `jack-parameters.txt`.
 
 ## What I didn't look at
-* [Shrinking and Obfuscation support](http://tools.android.com/tech-docs/jackandjill#TOC-Shrinking-and-Obfuscation-support) for more)
+* [Shrinking and Obfuscation support](http://tools.android.com/tech-docs/jackandjill#TOC-Shrinking-and-Obfuscation-support)
 * [Repackaging support / jarjar](http://tools.android.com/tech-docs/jackandjill#TOC-Repackaging-support)
 * [Jack server](https://android.googlesource.com/platform/prebuilts/sdk/+/master/tools/README-jack-server.md)
 * the [$HOME/.jack](https://source.android.com/source/jack.html#$home_jack_file) file
 * including `.aar` libraries
 * switching [incremental build](https://source.android.com/source/jack.html#incremental_compilation) on and off (though official sources contradict each other on whether it's [enabled](http://tools.android.com/tech-docs/jackandjill#TOC-Compilation-support) or [disabled](https://source.android.com/source/jack.html#incremental_compilation) by default)
+* [Multidex support](https://developer.android.com/studio/build/multidex.html) (for apps with over 64K methods - not directly related to Jack, but may become important when using some libraries)
 
 
 
 ## Build errors and their solutions
 Here are a few build errors I faced and the solutions I came up with:
 ### `:app:lintFailed converting ECJ parse tree to Lombok for file <file>`
-This problem is tue to the fact, that Android Lint doesn't "like" Lambdas.
+This problem is due to the fact that Android Lint doesn't *like* lambdas even though Android (using Jack) officially supports them since [at least API level 23](https://developer.android.com/guide/platform/j8-jack.html#supported-features).
 A solution which I found [here](https://code.google.com/p/android/issues/detail?id=200887) is this:
 
 In the `buildscript` portion of your gradle build file, add the following dependency:
@@ -64,6 +65,6 @@ Simply rebuilding should normally do the trick.
 
 ### `:app:mergeDebugResourcesException in thread "<thread name>" java.lang.RuntimeException: Timed out while waiting for slave aapt process, make sure the aapt execute at <android sdk path>/build-tools/24.0.3/aapt can run successfully (some anti-virus may block it) or try setting environment variable SLAVE_AAPT_TIMEOUT to a value bigger than 5 seconds`
 
-There seems to be a problem in some versions of the android build tools, which causes aapt to fail.
+There seems to be a problem in some versions of the android build tools, which causes `aapt` to fail.
 This problem has existed on and off for a while and the issue can be followed [here](https://code.google.com/p/android/issues/detail?id=188627).
 A solution which worked for me was switching from the build tool version 24.0.3 back to 24.0.2.
