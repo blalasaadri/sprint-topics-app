@@ -13,6 +13,35 @@ This is a small project for the first Senacor "24h Sprint". In this project I wa
 4. As of today (29th September 2016), Jack and Jill does work for third party libraries which use Java 8 functionalities (e.g. [Javaslang](http://www.javaslang.io/)).
    The issue is being worked on and its progress can be followed in the [android issue tracker](https://code.google.com/p/android/issues/detail?id=211386).
    There might be a workaround by turning the third party library into an `.aar` using the Android Maven Plugin (as stated [here](https://code.google.com/p/android/issues/detail?id=211386#c30)), but I haven't tested that as it seems overly complex.
+5. Jack offers a long list of additional parameters, which in the `build.gradle` file can be set like such:
+
+        android {
+        ...
+            defaultConfig {
+            ...
+                jackOptions {
+                    enabled true
+                    additionalParameters("jack.incremental" : true)
+                }
+            }
+        ...
+        }
+    However, many of these are poorly documented.
+    A full list of the parameters with very rudimentary documentation can be retrieved by the following command:
+
+        $ java -jar <SDK>/build-tools/<build-tools-version>/jack.jar --help-properties
+
+    The output of this command using the build tools version 24.0.3 can be found in the file `jack-parameters.txt`.
+
+## What I didn't look at
+* [Shrinking and Obfuscation support](http://tools.android.com/tech-docs/jackandjill#TOC-Shrinking-and-Obfuscation-support) for more)
+* [Repackaging support / jarjar](http://tools.android.com/tech-docs/jackandjill#TOC-Repackaging-support)
+* [Jack server](https://android.googlesource.com/platform/prebuilts/sdk/+/master/tools/README-jack-server.md)
+* the [$HOME/.jack](https://source.android.com/source/jack.html#$home_jack_file) file
+* including `.aar` libraries
+* switching [incremental build](https://source.android.com/source/jack.html#incremental_compilation) on and off (though official sources contradict each other on whether it's [enabled](http://tools.android.com/tech-docs/jackandjill#TOC-Compilation-support) or [disabled](https://source.android.com/source/jack.html#incremental_compilation) by default)
+
+
 
 ## Build errors and their solutions
 Here are a few build errors I faced and the solutions I came up with:
