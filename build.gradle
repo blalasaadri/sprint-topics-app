@@ -13,7 +13,7 @@ buildscript {
         // in the individual module build.gradle files
     }
 
-    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+    //configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 allprojects {
